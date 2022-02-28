@@ -7,4 +7,4 @@ The book is available online for free [here.](http://blairgemmer.com/docs/BakTan
 Greg Barbieri - [@gfbarbieri](https://github.com/gfbarbieri)
 
 ## Description
-The book discusses several prominent models used to study complex systems and the self-organized criticality. Three that interest me are The Sandpile Model, The Game of Life, and The Model of a Critical Economy. In this notebook, I have so far produced demonstrations of The Sandpile Model and The Game of Life.
+The book discusses several prominent models used to study complex systems, in particular the emergence of a property called self-organized criticality. Three models interest me: The Sandpile Model, The Game of Life, and The Model of a Critical Economy. These are not the "official" names of these models. In this notebook, I have so far produced demonstrations of The Sandpile Model and The Game of Life.
