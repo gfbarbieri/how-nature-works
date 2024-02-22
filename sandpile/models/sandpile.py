@@ -72,8 +72,8 @@ class Sandpile(ap.Model):
             # again and collapse onto neighboring piles.
             self.num_pile_collapses += len(agnts)
 
-            # For each agent exceeding grain limits, select a neighbor and from their six
-            # possible neighbors and add one grain to their piles.
+            # For each agent exceeding grain limits, select a neighbor and from
+            # their eight possible neighbors and add one grain to their piles.
             for agnt in agnts:
                 agnt.collapse = True
 
