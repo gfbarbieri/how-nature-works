@@ -2,7 +2,7 @@
 # IMPORTS
 ###############################################################################
 
-from config.base_config import base_params
+from config import parameters
 from models.sandpile import Sandpile
 
 ###############################################################################
@@ -11,15 +11,21 @@ from models.sandpile import Sandpile
 
 def main():
 
-    print(f"Retrieving Experiment Details.")
-    parameters = base_params
+    # Extract experiment details
+    print(f"Retrieving experiment details.")
+    base_params = parameters['base']['parameters']
 
-    print(f"Starting Experiment: {parameters['steps']} Steps")
-    model = Sandpile(parameters)
+    # Initialize model with imported parameters.
+    print(f"Initializing experiment: {base_params['steps']} Steps")
+    model = Sandpile(base_params)
+
+    # Run the model.
+    print("Running model.")
     results = model.run()
 
-    print(f"Experiment Complete")
-    results.save(exp_name='sandpile_base', path='data')
+    # Save model results.
+    print("Experiment complete. Saving results.")
+    results.save(exp_name='sandpile', path='data')
 
 if __name__ == '__main__':
     main()

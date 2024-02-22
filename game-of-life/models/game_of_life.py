@@ -22,10 +22,6 @@ class GameOfLife(Model):
         self.grid = Grid(self, shape=[int(math.sqrt(self.p['size']))]*2, torus=True, track_empty=True)
         self.grid.add_agents(self.agents, random=True, empty=True)
 
-        print(self.agents)
-        print(self.agents.status)
-        print(self.grid)
-
     def step(self):
         
         #######################################################################
@@ -67,28 +63,29 @@ class GameOfLife(Model):
         # BIRTH AND DEATH
         #######################################################################
         
-        # 1. Get a copy of the agents on the grid.
+        # 1. Get a copy of all the agents on the grid.
         agents = self.agents.copy()
-        print(agents)
+        print(f"Starting status of all agents on the grid:")
+        print(self.agents.status)
 
-        # 2. For each agent, find it's neighbors and use the rules of the game
-        # to generate a new status.
+        # 2. For each agent, find it's neighbors and use the rules of the Game
+        # of Life to generate a new status for the agent.
         status_updates = []
 
-        for i, agnt in enumerate(agents):
-            print(i, agnt.status)
+        for agent in agents:
+            print(f"Starting agent {agent.id}, status: {agent.status}")
             
-            neighbors = self.grid.neighbors(agnt)
-            print(neighbors)
+            neighbors = self.grid.neighbors(agent)
             
-            new_status = self.update_status(agnt, neighbors)
-            print(new_status)
+            new_status = self.update_status(agent, neighbors)
+            print(f"Ending agent {agent.id}, status: {new_status}")
 
             status_updates.append(new_status)
-            print(status_updates)
 
         # 3. Apply the list to the agents.
-        # self.agents.status = status_updates
+        self.agents.status = AttrIter(status_updates)
+        print(f"Ending status of all agents on the grid:")
+        print(self.agents.status)
 
     def end(self):
         pass
@@ -97,20 +94,24 @@ class GameOfLife(Model):
         """
         Updates the status of the activated agent based on the status
         of its neighbors.
+
+        List of the rules of the game here.
         """
 
+        nss = sum(list(neighbors.status))
+
+        print(f"Agent {agent.id}'s live neighbors: {nss}")
+
         # Birth.
-        if agent.status == 0 and sum(neighbors.status) == 3:
-            status = 1
-        # Survival.
-        elif agent.status == 1 and sum(neighbors.status) >= 2:
+        if agent.status == 0 and nss == 3:
             status = 1
         # Death by underpopulation.
-        elif agent.status == 1 and sum(neighbors.status) < 2:
+        elif agent.status == 1 and nss <= 1:
             status = 0
         # Death by overpopulation.
-        elif agent.status == 1 and sum(neighbors.status) > 3:
+        elif agent.status == 1 and nss > 3:
             status = 0
+        # Continue at current state (dead or alive).
         else:
             status = agent.status
         
